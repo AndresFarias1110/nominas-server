@@ -33,7 +33,7 @@ module.exports = {
 	},
 
 	getFiles: (req, res) => {
-		Empleados.findOne({ id: req.params.id }).populate('nominas').exec( (err, nominas)=> {
+		Empleados.findOne({ id: req.params.id }).populate('nominas', { sort: 'fecha DESC' }).exec( (err, nominas)=> {
 			if(err) res.json(err);
 			res.json(nominas.nominas);
 		})

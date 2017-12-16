@@ -36,6 +36,7 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+	'GET /user/nominas/:id': 'UsersController.getFiles',
 
 
 	'POST /create/user': 'UsersController.create',

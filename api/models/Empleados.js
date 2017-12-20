@@ -17,13 +17,15 @@ module.exports = {
 	  noempleado: {
 		  type: 'integer'
 	  },
-	  mail: {
+	  rfc: {
 		  type: 'string'
 	  },
-
+	  carpeta: {
+		  type: 'string'
+	  },
 	  nominas: {
           collection: 'nominas',
-          via: 'empleado'
+          via: 'codigo'
       }
   }
 };

@@ -7,15 +7,29 @@
 
 module.exports = {
 	login: (req, res) => {
+		Empleados.query('SELECT * FROM empleados WHERE empleados.rfc = ? AND empleados.password = ?', [ req.body.rfc, req.body.password ], (err, found) => {
+			if(err) {
+				console.log(err); res.json(err)
+			}
 
-		Empleados.findOne(req.body).exec( (err, found) => {
-			if(err) res.json(err);
 			if(found){
-				res.json(found);
+				console.log(JSON.parse(JSON.stringify(found[0])));
+				let rsjson = JSON.parse(JSON.stringify(found[0]));
+				res.json(rsjson);
+				// res.json(JSON.parse(JSON.stringify(found[0])));
 			} else {
 				res.status(404).json({ msj: "Users not found"});
 			}
-		});
+		})
+		// Empleados.findOne(req.body).exec( (err, found) => {
+		// 	if(err) res.json(err);
+		// 	if(found){
+		// 		console.log(found);
+		// 		res.json(found);
+		// 	} else {
+		// 		res.status(404).json({ msj: "Users not found"});
+		// 	}
+		// });
 
 	//	res.json({ data: "success" })
 	},
@@ -33,9 +47,19 @@ module.exports = {
 	},
 
 	getFiles: (req, res) => {
-		Empleados.findOne({ id: req.params.id }).populate('nominas', { sort: 'fecha DESC' }).exec( (err, nominas)=> {
-			if(err) res.json(err);
-			res.json(nominas.nominas);
-		})
+		console.log(req.params);
+
+		Nominas.query('SELECT * FROM nominas WHERE nominas.codigo = ? ORDER BY fecha DESC', [req.params.codigo], (err, rawRs) => {
+			if (err) {
+				console.log(err)
+				res.json(err)
+			}
+			res.json(rawRs)
+		});
+
+		// Empleados.findOne({ id : req.params.id }).populate('nominas', { sort: 'fecha DESC' }).exec( (err, empleado)=> {
+		// 	if(err) res.json(err);
+		// 	res.json(empleado.nominas);
+		// })
 	}
 };

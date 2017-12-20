@@ -22,7 +22,7 @@ module.exports = {
 	  },
 
 	  //Pertenece a un empleado
-      empleado: {
+      codigo: {
         model: 'empleados',
         type: 'integer'
       },
